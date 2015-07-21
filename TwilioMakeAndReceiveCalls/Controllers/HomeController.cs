@@ -1,17 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Twilio;
+using Twilio.TwiML;
+using Twilio.TwiML.Mvc;
 
 namespace TwilioMakeAndReceiveCalls.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : TwilioController
     {
-        // GET: Home
+        //Get: Index
         public ActionResult Index()
         {
             return View();
+        }
+        
+        // GET: MakeCall
+        public ActionResult MakeCall(string id)
+        {
+            
+            var client = new TwilioRestClient(Settings.AccountSid, Settings.AuthToken);
+            client.InitiateOutboundCall(Settings.MyNumber, string.Format("+{0}", id), "http://www.televisiontunes.com/uploads/audio/Star%20Wars%20-%20The%20Imperial%20March.mp3");
+
+            return Content("The call has been is initiated");
+        }
+
+        public ActionResult ReceiveCall()
+        {
+            var twiml = new TwilioResponse();
+            return TwiML(twiml.Say("You are calling Marcos Placona").Dial(Settings.MyNumber));
         }
     }
 }
