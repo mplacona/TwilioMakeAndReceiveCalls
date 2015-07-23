@@ -14,13 +14,14 @@ namespace TwilioMakeAndReceiveCalls.Controllers
             return View();
         }
         
-        // GET: MakeCall
-        public ActionResult MakeCall(string id)
+        // POST: MakeCall
+        [HttpPost]
+        public ActionResult MakeCall(string number)
         {
             
             // Instantiate new Rest API object
             var client = new TwilioRestClient(Settings.AccountSid, Settings.AuthToken);
-            var result = client.InitiateOutboundCall(Settings.MyTwilioNumber, string.Format("+{0}", id), "http://www.televisiontunes.com/uploads/audio/Star%20Wars%20-%20The%20Imperial%20March.mp3");
+            var result = client.InitiateOutboundCall(Settings.MyTwilioNumber, number, "http://www.televisiontunes.com/uploads/audio/Star%20Wars%20-%20The%20Imperial%20March.mp3");
 
             // return any exceptions that may occur
             if (result.RestException != null)

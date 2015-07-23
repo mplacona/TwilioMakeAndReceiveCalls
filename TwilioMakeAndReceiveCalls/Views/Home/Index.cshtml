@@ -7,8 +7,12 @@
         <title>title</title>
     </head>
     <body>
-        <div>
-            @Html.ActionLink("Make Call", "MakeCall", "Home", new { id = "447590566866" }, null)
-        </div>
+        @using (Html.BeginForm("MakeCall", "Home", FormMethod.Post))
+        {
+            <div>
+                Enter a number: @Html.TextBox("number")
+                <button type="submit">Make Call</button>
+            </div>
+        }
     </body>
 </html>
